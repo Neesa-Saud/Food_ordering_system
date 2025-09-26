@@ -9,7 +9,10 @@ class StartPageBloc extends Bloc<StartPageEvent, StartPageState> {
     on<StartPageButtonClickEvent>(startPageButtonClickEventHandler);
   }
 }
+
 Future<void> startPageButtonClickEventHandler(
-      StartPageButtonClickEvent event, Emitter<StartPageState> emit) async {
-    emit(StartPageButtonClickedState());
-  }
+  StartPageButtonClickEvent event,
+  Emitter<StartPageState> emit,
+) async {
+  emit(StartPageButtonClickedState());
+}
