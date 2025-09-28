@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodapp/Data/CartOrder_model.dart';
+import 'package:foodapp/Pages/CartPage/bloc/cartpage_bloc.dart';
+import 'package:foodapp/Pages/OrdersPage/bloc/orderpage_bloc.dart';
 import 'package:foodapp/Utils/Text.dart';
 
-class DescriptionPage extends StatefulWidget {
-  final String itemName, itemDescription, itemImage, itemPrice, restaurantName;
+class DescriptionPage extends StatelessWidget {
+  final String itemName, itemDescription, itemImage, restaurantName;
+  final double itemPrice;
 
   const DescriptionPage({
     super.key,
@@ -15,23 +20,21 @@ class DescriptionPage extends StatefulWidget {
   });
 
   @override
-  State<DescriptionPage> createState() => _DescriptionPageState();
-}
-
-class _DescriptionPageState extends State<DescriptionPage> {
-  @override
   Widget build(BuildContext context) {
+    final cartBloc = BlocProvider.of<CartpageBloc>(context);
+    final orderBloc = BlocProvider.of<OrderpageBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: ModifiedText(text: "Details", color: Colors.black, size: 17),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             height: 200,
             width: double.infinity,
             child: CachedNetworkImage(
-              imageUrl: widget.itemImage,
+              imageUrl: itemImage,
               placeholder: (context, url) => CircularProgressIndicator(),
               errorWidget: (context, url, error) =>
                   Image.asset("assets/foodlist.png"),
@@ -39,74 +42,54 @@ class _DescriptionPageState extends State<DescriptionPage> {
             ),
           ),
           SizedBox(height: 8),
-          Container(
-            width: double.infinity,
-            height: 30,
-            child: ModifiedText(
-              text: widget.itemName,
-              color: Colors.black,
-              size: 20,
-            ),
+          ModifiedText(text: itemName, color: Colors.black, size: 20),
+          ModifiedText(
+            text: "By $restaurantName",
+            color: Colors.grey,
+            size: 14,
           ),
-          SizedBox(height: 3),
-          Container(
-            width: double.infinity,
-            height: 20,
+          ModifiedText(
+            text: "Price: Rs. $itemPrice",
+            color: Colors.black,
+            size: 14,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ModifiedText(
-              text: "By ${widget.restaurantName}",
+              text: itemDescription,
               color: Colors.grey,
               size: 14,
             ),
           ),
-          SizedBox(height: 2),
-          Container(
-            width: double.infinity,
-            height: 20,
-            child: ModifiedText(
-              text: "Price: Rs. ${widget.itemPrice}",
-              color: Colors.black,
-              size: 14,
-            ),
-          ),
-          SizedBox(height: 3),
-          Container(
-            height: 150,
-            width: double.infinity,
-            padding: EdgeInsets.all(8),
-            child: ModifiedText(
-              text: widget.itemDescription,
-              color: Colors.grey,
-              size: 14,
-            ),
-          ),
-
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.amberAccent,
-                  ),
-                ),
-                onPressed: () {},
+                onPressed: () {
+                  final product = Product(
+                    itemName: itemName,
+                    imageUrl: itemImage,
+                    itemPrice: itemPrice,
+                    restaurantName: restaurantName,
+                  );
+                  cartBloc.add(AddItemEvent(product));
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Item added to cart")),
+                  );
+                },
                 child: ModifiedText(
                   text: "Add to cart",
                   color: Colors.black,
-                  size: 10,
+                  size: 12,
                 ),
               ),
               ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.amberAccent,
-                  ),
-                ),
                 onPressed: () {},
                 child: ModifiedText(
                   text: "Order",
                   color: Colors.black,
-                  size: 10,
+                  size: 12,
                 ),
               ),
             ],

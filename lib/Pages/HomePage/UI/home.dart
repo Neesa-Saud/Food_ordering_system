@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodapp/Models/Homepagedata/horizontalscroll.dart';
+import 'package:foodapp/Data/Homepagedata/horizontalscroll.dart';
 import 'package:foodapp/Pages/CartPage/UI/cartpage.dart';
 import 'package:foodapp/Pages/HomePage/UI/popularfood.dart';
 import 'package:foodapp/Pages/OrdersPage/UI/orderpage.dart';
@@ -19,12 +19,12 @@ class _HomeState extends State<Home> {
     if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const OrderPage()),
+        MaterialPageRoute(builder: (context) => OrderPage()),
       );
     } else if (index == 2) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const CartPage()),
+        MaterialPageRoute(builder: (context) => CartPage()),
       );
     } else {
       setState(() {
@@ -177,9 +177,9 @@ class _HomeState extends State<Home> {
           Expanded(child: Popularfood()),
         ],
       ),
-      // Move BottomNavigationBar to the bottomNavigationBar property
+
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, // track selected tab
+        currentIndex: _currentIndex,
         selectedItemColor: Colors.amber,
         unselectedItemColor: Colors.grey,
         onTap: _onTabTapped,

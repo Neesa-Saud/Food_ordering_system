@@ -61,7 +61,7 @@ class _PopularfoodState extends State<Popularfood> {
                             itemName: food.itemName,
                             itemDescription: food.itemDescription,
                             itemImage: food.imageUrl,
-                            itemPrice: food.itemPrice.toString(),
+                            itemPrice: food.itemPrice,
                             restaurantName: food.restaurantName,
                           ),
                         ),

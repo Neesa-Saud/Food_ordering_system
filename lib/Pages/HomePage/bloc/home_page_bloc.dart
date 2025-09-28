@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:foodapp/Models/Homepagedata/fetchingfood.dart';
-import 'package:foodapp/Models/Homepagedata/popularfooddata.dart';
+import 'package:foodapp/Data/Homepagedata/fetchingfood.dart';
+import 'package:foodapp/Data/Homepagedata/popularfooddata.dart';
 import 'package:meta/meta.dart';
 
 part 'home_page_event.dart';

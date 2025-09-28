@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodapp/Data/CartOrder_model.dart';
+import 'package:foodapp/Data/CartPage/cartItems.dart';
+import 'package:foodapp/Pages/CartPage/bloc/cartpage_bloc.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -8,76 +12,60 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  // Sample cart items
-  final List<Map<String, String>> cartItems = [
-    {
-      "name": "Afghan Kebabs",
-      "price": "450",
-      "image":
-          "https://fakerestaurantapi.runasp.net/images/afghan%20kebabs.jpg",
-    },
-    {
-      "name": "Butter Chicken",
-      "price": "500",
-      "image":
-          "https://fakerestaurantapi.runasp.net/images/butter%20chicken.jpg",
-    },
-    {
-      "name": "Dal Makhani",
-      "price": "300",
-      "image": "https://fakerestaurantapi.runasp.net/images/Dal-Makhani.webp",
-    },
-  ];
+  final CartpageBloc cartpageBloc = CartpageBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    cartpageBloc.add(cartInitialEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Cart")),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          final item = cartItems[index];
-          return Card(
-            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-            child: ListTile(
-              leading: Image.network(
-                item['image']!,
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-              title: Text(item['name']!),
-              subtitle: Text("Price: Rs. ${item['price']}"),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  setState(() {
-                    cartItems.removeAt(index);
-                  });
-                },
-              ),
-            ),
+      appBar: AppBar(title: const Text("Cart Items")),
+      body: BlocBuilder<CartpageBloc, CartpageState>(
+        bloc: cartpageBloc,
+
+        builder: (context, state) {
+          List<Product> cartItems = [];
+
+          if (state is CartSuccessState) {
+            cartItems = state.cartItems;
+          }
+
+          if (cartItems.isEmpty) {
+            return const Center(child: Text("No items in cart"));
+          }
+
+          return ListView.builder(
+            itemCount: cartItems.length,
+            itemBuilder: (context, index) {
+              final item = cartItems[index];
+              return Card(
+                margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                  leading: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Image.network(item.imageUrl, fit: BoxFit.cover),
+                  ),
+                  title: Text(item.itemName),
+                  subtitle: Text("Price: Rs. ${item.itemPrice}"),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      setState(() {
+                        cartItems.removeAt(index);
+                      });
+                    },
+                  ),
+                ),
+              );
+            },
           );
         },
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.grey[200],
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Total: Rs. ${cartItems.fold<int>(0, (sum, item) => sum + int.parse(item['price']!))}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to OrderPage or handle checkout
-              },
-              child: const Text("Checkout"),
-            ),
-          ],
-        ),
       ),
     );
   }
