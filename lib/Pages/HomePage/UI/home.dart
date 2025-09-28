@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/Models/Homepagedata/horizontalscroll.dart';
+import 'package:foodapp/Pages/HomePage/UI/popularfood.dart';
 import 'package:foodapp/Utils/Text.dart';
 
 class Home extends StatefulWidget {
@@ -105,10 +106,8 @@ class _HomeState extends State<Home> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Food image container
                             Container(
                               height: 40,
-
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(15),
@@ -146,31 +145,30 @@ class _HomeState extends State<Home> {
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ModifiedText(
-                    text: "Popular Restaurants",
+                    text: "Popular Food items",
                     color: Colors.black,
                     size: 17,
                   ),
                 ),
-                SizedBox(
-                  height: 300,
-                  child: ListView.builder(itemBuilder: itemBuilder, scrollDirection: Axis.horizontal),
-                )
               ],
             ),
           ),
-          BottomNavigationBar(
-            fixedColor: Colors.amber,
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.restaurant_menu),
-                label: 'Orders',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_basket),
-                label: 'Cart',
-              ),
-            ],
+          Expanded(child: Popularfood())
+          ,
+        ],
+      ),
+      // Move BottomNavigationBar to the bottomNavigationBar property
+      bottomNavigationBar: BottomNavigationBar(
+        fixedColor: Colors.amber,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_menu),
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_basket),
+            label: 'Cart',
           ),
         ],
       ),
