@@ -10,6 +10,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   HomePageBloc() : super(HomePageInitial()) {
     on<FetchFoodEvent>(fetchFoodEventhandler);
     on<FoodSelectedEvent>(foodSelectedEventhandler);
+   
   }
 }
 

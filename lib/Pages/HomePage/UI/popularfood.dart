@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodapp/Pages/DescriptionPage/UI/description.dart';
 import 'package:foodapp/Pages/HomePage/bloc/home_page_bloc.dart';
 
 class Popularfood extends StatefulWidget {
@@ -51,9 +52,20 @@ class _PopularfoodState extends State<Popularfood> {
                       ),
                     ],
                   ),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
-                      
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DescriptionPage(
+                            itemName: food.itemName,
+                            itemDescription: food.itemDescription,
+                            itemImage: food.imageUrl,
+                            itemPrice: food.itemPrice.toString(),
+                            restaurantName: food.restaurantName,
+                          ),
+                        ),
+                      );
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

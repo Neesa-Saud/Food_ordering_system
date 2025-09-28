@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodapp/Models/Homepagedata/horizontalscroll.dart';
+import 'package:foodapp/Pages/CartPage/UI/cartpage.dart';
 import 'package:foodapp/Pages/HomePage/UI/popularfood.dart';
+import 'package:foodapp/Pages/OrdersPage/UI/orderpage.dart';
 import 'package:foodapp/Utils/Text.dart';
 
 class Home extends StatefulWidget {
@@ -11,6 +13,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+
+  void _onTabTapped(int index) {
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const OrderPage()),
+      );
+    } else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const CartPage()),
+      );
+    } else {
+      setState(() {
+        _currentIndex = index; // Keep home selected
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +100,6 @@ class _HomeState extends State<Home> {
                           textAlignVertical: TextAlignVertical.center,
                           style: TextStyle(fontSize: 16),
                           decoration: InputDecoration(
-                            hintText: "Search....",
                             hintStyle: TextStyle(fontSize: 16),
                             prefixIcon: Icon(Icons.search),
                             border: InputBorder.none,
@@ -153,14 +174,16 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          Expanded(child: Popularfood())
-          ,
+          Expanded(child: Popularfood()),
         ],
       ),
       // Move BottomNavigationBar to the bottomNavigationBar property
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.amber,
-        items: [
+        currentIndex: _currentIndex, // track selected tab
+        selectedItemColor: Colors.amber,
+        unselectedItemColor: Colors.grey,
+        onTap: _onTabTapped,
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu),

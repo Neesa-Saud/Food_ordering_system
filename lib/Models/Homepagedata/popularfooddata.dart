@@ -2,7 +2,7 @@ class Food {
   final int itemID;
   final String itemName;
   final String imageUrl;
-  final String itemDescrption;
+  final String itemDescription;
   final double itemPrice;
   final String restaurantName;
   final int restaurantID;
@@ -10,7 +10,7 @@ class Food {
     required this.itemID,
     required this.itemName,
     required this.imageUrl,
-    required this.itemDescrption,
+    required this.itemDescription,
     required this.itemPrice,
     required this.restaurantName,
     required this.restaurantID,
@@ -20,7 +20,7 @@ class Food {
       itemID: json['itemID'] ?? 0,
       itemName: json['itemName'] ?? '',
       imageUrl: json['imageUrl'] ?? '',
-      itemDescrption: json['itemDescrption'] ?? '',
+      itemDescription: json['itemDescription'] ?? '',
       itemPrice: (json['itemPrice'] ?? 0).toDouble(),
       restaurantName: json['restaurantName'] ?? '',
       restaurantID: json['restaurantID'] ?? 0,
