@@ -43,6 +43,7 @@ class DescriptionPage extends StatelessWidget {
           ),
           SizedBox(height: 8),
           ModifiedText(text: itemName, color: Colors.black, size: 20),
+          SizedBox(height: 8),
           ModifiedText(
             text: "By $restaurantName",
             color: Colors.grey,
@@ -53,6 +54,7 @@ class DescriptionPage extends StatelessWidget {
             color: Colors.black,
             size: 14,
           ),
+          SizedBox(height: 3),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ModifiedText(
@@ -65,6 +67,9 @@ class DescriptionPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.amber),
+                ),
                 onPressed: () {
                   final product = Product(
                     itemName: itemName,
@@ -85,6 +90,9 @@ class DescriptionPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.amber),
+                ),
                 onPressed: () {
                   final product = Product(
                     itemName: itemName,
