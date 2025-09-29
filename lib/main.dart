@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:foodapp/Pages/OrdersPage/bloc/orderpage_bloc.dart";
 import "package:foodapp/Pages/StartPage/UI/startpage.dart";
 import "package:foodapp/Pages/CartPage/bloc/cartpage_bloc.dart";
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,12 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CartpageBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CartpageBloc>(
+          create: (context) => CartpageBloc(),
+        ),
+        BlocProvider<OrderpageBloc>(
+          create: (context) => OrderpageBloc(),
+        ),
+      ],
       child: MaterialApp(
-        theme: ThemeData(primaryColor: Colors.amber),
+        theme: ThemeData(primarySwatch: Colors.amber),
         debugShowCheckedModeBanner: false,
-        home: StartPage(),
+        home: const StartPage(),
       ),
     );
   }

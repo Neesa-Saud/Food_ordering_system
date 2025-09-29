@@ -85,7 +85,19 @@ class DescriptionPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final product = Product(
+                    itemName: itemName,
+                    imageUrl: itemImage,
+                    itemPrice: itemPrice,
+                    restaurantName: restaurantName,
+                  );
+                  orderBloc.add(AddOrderItemEvent(product));
+
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text("Item Ordered")));
+                },
                 child: ModifiedText(
                   text: "Order",
                   color: Colors.black,

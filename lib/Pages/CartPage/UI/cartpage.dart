@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodapp/Data/CartOrder_model.dart';
@@ -49,7 +50,14 @@ class _CartPageState extends State<CartPage> {
                   leading: SizedBox(
                     width: 50,
                     height: 50,
-                    child: Image.network(item.imageUrl, fit: BoxFit.cover),
+                    child: CachedNetworkImage(
+                      imageUrl: item.imageUrl,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          Image.asset("assets/foodlist.png"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   title: Text(item.itemName),
                   subtitle: Text("Price: Rs. ${item.itemPrice}"),

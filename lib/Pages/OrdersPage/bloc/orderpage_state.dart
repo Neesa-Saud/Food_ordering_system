@@ -6,6 +6,6 @@ sealed class OrderpageState {}
 class OrderpageInitial extends OrderpageState {}
 
 class OrderSuccessState extends OrderpageState {
-  final List<Product> cartItems;
-  OrderSuccessState(this.cartItems);
+  final List<Product> orderItems;
+  OrderSuccessState(this.orderItems);
 }
